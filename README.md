@@ -43,8 +43,8 @@ para convenções e schema.
 
 ```
 ┌──────────────┐  POST /api/recommend  ┌──────────────┐  RPC match_*  ┌────────────────┐
-│   Frontend   │ ─────────────────────▶│  API Python  │ ─────────────▶│    Supabase    │
-│   Next.js    │ ◀──────────────────── │   FastAPI    │ ◀──────────── │   (pgvector)   │
+│   Frontend   │ ────────────────────▶│  API Python   │ ────────────▶│    Supabase    │
+│   Next.js    │ ◀─────────────────── │   FastAPI     │ ◀─────────── │   (pgvector)   │
 └──────────────┘        JSON           └──────┬───────┘               └────────────────┘
                                               │  BGE-M3 (inferência hospedada: Cloudflare/HF)
                                               │  TMDb (pôsteres + sinopses)
