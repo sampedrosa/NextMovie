@@ -52,6 +52,7 @@ export default function SearchBox({
           }}
           rows={3}
           maxLength={MAX_CHARS}
+          spellCheck={false}
           placeholder="Um drama de guerra futurística..."
           className="w-full resize-none rounded-2xl border border-night-600 bg-night-900/90 p-5 pb-10 pr-32 text-base text-screen-100 placeholder-screen-500 shadow-xl shadow-black/30 outline-none backdrop-blur transition-colors focus:border-marquee-500/60"
         />
@@ -68,21 +69,26 @@ export default function SearchBox({
       </form>
 
       {!searched && (
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          {EXAMPLES.map((example) => (
-            <button
-              key={example}
-              type="button"
-              onClick={() => {
-                setQuery(example);
-                submit(example);
-              }}
-              disabled={loading}
-              className="rounded-full border border-night-600 bg-night-800/60 px-3.5 py-1.5 text-xs text-screen-300 transition-colors hover:border-marquee-500/50 hover:text-marquee-300 disabled:opacity-40"
-            >
-              {example}
-            </button>
-          ))}
+        <div className="mt-6 flex flex-col items-center gap-3">
+          <span className="text-xs uppercase tracking-wide text-screen-500">
+            Experimente
+          </span>
+          <div className="flex flex-wrap justify-center gap-2">
+            {EXAMPLES.map((example) => (
+              <button
+                key={example}
+                type="button"
+                onClick={() => {
+                  setQuery(example);
+                  submit(example);
+                }}
+                disabled={loading}
+                className="rounded-full border border-night-600 bg-night-800/60 px-3.5 py-1.5 text-xs text-screen-300 transition-colors hover:border-marquee-500/50 hover:text-marquee-300 disabled:opacity-40"
+              >
+                {example}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

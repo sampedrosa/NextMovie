@@ -32,6 +32,20 @@ export default function Home() {
     [data, filters]
   );
 
+  // Quality gate: average relevance (similarity) of the returned movies. Noisy
+  // or nonsensical prompts produce low-similarity matches across the board.
+  const RELEVANCE_THRESHOLD = 0.5;
+  const avgRelevance = useMemo(() => {
+    const items = data?.results ?? [];
+    if (items.length === 0) return 0;
+    return items.reduce((sum, m) => sum + m.similarity, 0) / items.length;
+  }, [data]);
+
+  const lowRelevance =
+    data !== null &&
+    data.results.length > 0 &&
+    avgRelevance <= RELEVANCE_THRESHOLD;
+
   async function handleSearch(query: string) {
     setLoading(true);
     setError(null);
@@ -57,7 +71,7 @@ export default function Home() {
   }
 
   const showFilters =
-    !loading && !error && data !== null && data.results.length > 0;
+    !loading && !error && data !== null && data.results.length > 0 && !lowRelevance;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -70,14 +84,14 @@ export default function Home() {
           <Image
             src="/nextmovie-logo.png"
             alt="NextMovie"
-            width={132}
-            height={150}
+            width={384}
+            height={256}
             priority
             className={`drop-shadow-[0_8px_24px_rgba(0,0,0,0.55)] transition-all duration-500 ${
-              searched ? "w-20" : "w-28 sm:w-32"
+              searched ? "w-40 sm:w-48" : "w-64 sm:w-80"
             } h-auto`}
           />
-          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.25em] text-marquee-400">
+          <p className="mt-3 text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-marquee-400 sm:text-xs">
             • Seu recomendador de filme •
           </p>
           <h1 className="mt-2 font-display text-5xl font-bold tracking-tight text-screen-100 sm:text-6xl">
@@ -88,13 +102,15 @@ export default function Home() {
         <SearchBox onSearch={handleSearch} loading={loading} searched={searched} />
 
         <section className="space-y-6 pb-20 pt-12">
-          {(data?.expanded_keywords.length ?? 0) > 0 && !loading && (
-            <div className="flex flex-wrap items-center gap-1.5 text-sm text-screen-500">
-              <span>Conceitos detectados:</span>
+          {(data?.expanded_keywords.length ?? 0) > 0 && !loading && !lowRelevance && (
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <span className="text-xs uppercase tracking-wide text-screen-500">
+                Conceitos detectados
+              </span>
               {data!.expanded_keywords.map((keyword) => (
                 <span
                   key={keyword}
-                  className="rounded-full bg-night-800 px-2 py-0.5 text-xs text-marquee-300"
+                  className="rounded-full border border-night-700 bg-night-800/70 px-2.5 py-0.5 text-xs text-marquee-300"
                 >
                   {keyword}
                 </span>
@@ -118,13 +134,14 @@ export default function Home() {
             results={view}
             loading={loading}
             error={error}
+            lowRelevance={lowRelevance}
             onClearFilters={clearFilters}
           />
         </section>
       </main>
 
       <footer className="border-t border-night-800 py-6 text-center text-xs text-screen-500">
-        NextMovie - Desenvolvido por Samuel Pedrosa.
+        NextMovie — Desenvolvido por Samuel Pedrosa.
       </footer>
     </div>
   );

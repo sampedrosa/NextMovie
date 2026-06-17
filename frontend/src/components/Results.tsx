@@ -26,12 +26,14 @@ export default function Results({
   results,
   loading,
   error,
+  lowRelevance,
   onClearFilters,
 }: {
   data: RecommendResponse | null;
   results: MovieResult[];
   loading: boolean;
   error: string | null;
+  lowRelevance: boolean;
   onClearFilters: () => void;
 }) {
   if (loading) return <LoadingState />;
@@ -46,6 +48,24 @@ export default function Results({
   }
 
   if (!data) return null;
+
+  if (lowRelevance) {
+    return (
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-5 rounded-xl border border-night-600 bg-night-900/60 p-8 text-center">
+        <p className="font-display text-xl text-screen-100">
+          Não encontramos nenhum filme compatível, tente outro prompt.
+        </p>
+        <Image
+          src="/travolta.gif"
+          alt="Confuso procurando filmes"
+          width={300}
+          height={170}
+          unoptimized
+          className="h-auto w-56 rounded-lg"
+        />
+      </div>
+    );
+  }
 
   if (data.results.length === 0) {
     return (
@@ -89,7 +109,7 @@ export default function Results({
   }
 
   return (
-    <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
       {results.map((movie, index) => (
         <MovieCard key={`${movie.movie_id}-${index}`} movie={movie} index={index} />
       ))}

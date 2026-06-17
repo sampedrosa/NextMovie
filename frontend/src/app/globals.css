@@ -14,12 +14,43 @@
   --color-screen-300: #c9c4b4;
   --color-screen-500: #8d8878;
 
-  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Headings read better with balanced line breaks */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Keyboard focus ring consistent with the theme */
+:focus-visible {
+  outline: 2px solid var(--color-marquee-400);
+  outline-offset: 2px;
+}
+
+/* Dark-theme scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-night-600) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-night-600);
+  border-radius: 999px;
+  border: 2px solid var(--color-night-950);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-night-700);
 }
 
 body {

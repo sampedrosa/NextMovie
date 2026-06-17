@@ -21,7 +21,7 @@ export default function MovieCard({
 
   return (
     <article
-      className="card-enter group flex flex-col overflow-hidden rounded-xl border border-night-700 bg-night-900/80 shadow-lg shadow-black/40 transition-transform duration-300 hover:-translate-y-1 hover:border-marquee-500/40"
+      className="card-enter group flex flex-col overflow-hidden rounded-xl border border-night-700 bg-night-900/80 shadow-lg shadow-black/40 transition-all duration-300 hover:-translate-y-1 hover:border-marquee-500/40 hover:shadow-xl hover:shadow-black/50"
       style={{ animationDelay: `${Math.min(index * 60, 600)}ms` }}
     >
       <div className="relative aspect-[2/3] w-full overflow-hidden bg-night-800">
@@ -65,7 +65,7 @@ export default function MovieCard({
               unoptimized
             />
           )}
-          <h3 className="font-display text-lg font-semibold leading-tight text-screen-100">
+          <h3 className="line-clamp-2 font-display text-lg font-semibold leading-tight text-screen-100">
             {movie.title}
             {year ? (
               <span className="ml-2 text-sm font-normal text-screen-500">{year}</span>
