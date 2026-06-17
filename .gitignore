@@ -1,3 +1,23 @@
+# env
 .env
 .env.*
 !.env.example
+
+# python
+api/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# logs
+*.log
+
+# node / next
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/next-env.d.ts
+*.tsbuildinfo
+
+# vercel
+.vercel

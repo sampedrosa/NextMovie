@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  /* Cinema-at-night palette */
+  --color-night-950: #07070c;
+  --color-night-900: #0c0c14;
+  --color-night-800: #14141f;
+  --color-night-700: #1e1e2d;
+  --color-night-600: #2b2b40;
+  --color-marquee-300: #ffd76a;
+  --color-marquee-400: #f5b50a;
+  --color-marquee-500: #d99a06;
+  --color-screen-100: #f2efe6;
+  --color-screen-300: #c9c4b4;
+  --color-screen-500: #8d8878;
+
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-night-950);
+  color: var(--color-screen-100);
+  font-family: var(--font-body);
+  /* Projector glow at the top of the "theater" */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245, 181, 10, 0.13), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 110%, rgba(80, 70, 160, 0.12), transparent 70%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+::selection {
+  background-color: var(--color-marquee-400);
+  color: var(--color-night-950);
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-enter {
+  animation: card-enter 0.45s ease-out both;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-night-800) 25%,
+    var(--color-night-700) 50%,
+    var(--color-night-800) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
