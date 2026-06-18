@@ -29,3 +29,12 @@ export interface Filters {
   genres: string[];
   sortBy: SortKey;
 }
+
+export interface VectorAtlasData {
+  genres: string[];
+  x: number[];
+  y: number[];
+  z: number[];
+  g: number[];
+  t: string[];
+}

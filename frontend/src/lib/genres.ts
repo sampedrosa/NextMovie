@@ -9,6 +9,7 @@ export const GENRE_PT: Record<string, string> = {
   Family: "Família",
   Fantasy: "Fantasia",
   History: "Histórico",
+  Horror: "Terror",
   Music: "Musical",
   Mystery: "Mistério",
   Romance: "Romance",

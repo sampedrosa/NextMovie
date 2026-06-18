@@ -39,12 +39,18 @@ e seus keywords ficam indexados em duas tabelas (`movie`, `keyword`) com buscas 
 similaridade por cosseno. Ver [supabase/supabase-vector-schema.md](supabase/supabase-vector-schema.md) 
 para convenções e schema.
 
+No site dá pra visualizar esses vetores: o botão "Visualizar Filmes Vetorizados" abre 
+um gráfico 3D com os filmes posicionados pela similaridade dos seus embeddings 
+(redimensionados de 1024 para 3 dimensões com UMAP).
+
+![Universo de filmes vetorizados](frontend/images/universo.png)
+
 ## Arquitetura
 
 ```
 ┌──────────────┐  POST /api/recommend  ┌──────────────┐  RPC match_*  ┌────────────────┐
-│   Frontend   │ ─────────────────────▶│  API Python  │ ─────────────▶│    Supabase    │
-│   Next.js    │ ◀──────────────────── │   FastAPI    │ ◀──────────── │   (pgvector)   │
+│   Frontend   │ ────────────────────▶│  API Python   │ ────────────▶│    Supabase    │
+│   Next.js    │ ◀─────────────────── │   FastAPI     │ ◀─────────── │   (pgvector)   │
 └──────────────┘        JSON           └──────┬───────┘               └────────────────┘
                                               │  BGE-M3 (inferência hospedada: Cloudflare/HF)
                                               │  TMDb (pôsteres + sinopses)

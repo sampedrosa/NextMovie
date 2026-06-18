@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import SearchBox from "@/components/SearchBox";
 import Results from "@/components/Results";
@@ -9,12 +10,17 @@ import { fetchRecommendations } from "@/lib/api";
 import { applyFilters, deriveOptions } from "@/lib/filters";
 import type { Filters, RecommendResponse } from "@/lib/types";
 
+const VectorAtlas = dynamic(() => import("@/components/VectorAtlas"), {
+  ssr: false,
+});
+
 export default function Home() {
   const [data, setData] = useState<RecommendResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
   const [searchSeq, setSearchSeq] = useState(0);
+  const [showAtlas, setShowAtlas] = useState(false);
   const [filters, setFilters] = useState<Filters>({
     genres: [],
     sortBy: "relevance",
@@ -75,6 +81,16 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <button
+        type="button"
+        onClick={() => setShowAtlas(true)}
+        className="fixed right-4 top-4 z-40 rounded-full border border-night-700 bg-night-900/70 px-3 py-1.5 text-[11px] text-screen-500 backdrop-blur-sm transition-colors hover:border-marquee-500/50 hover:text-marquee-300 sm:right-6 sm:top-6"
+      >
+        Visualizar Filmes Vetorizados
+      </button>
+
+      {showAtlas && <VectorAtlas onClose={() => setShowAtlas(false)} />}
+
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
         <section
           className={`flex flex-col items-center text-center transition-all duration-500 ${
